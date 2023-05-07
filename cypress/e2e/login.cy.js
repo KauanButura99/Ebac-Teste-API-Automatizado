@@ -2,7 +2,7 @@
 
 describe('Login , Teste de API-ServeRest', () => {
 
-  it.only('Deve fazer login com sucesso', () => {
+  it('Deve fazer login com sucesso', () => {
     cy.request({
       method: 'POST',
       url: 'http://localhost:3000/login',
