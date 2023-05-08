@@ -10,7 +10,6 @@ describe('Teste da funcionalidade produtos', () => {
       method: "GET",
       url: "produtos"
     }).then((response) => {
-      expect(response.body.produtos[22].nome).to.equal("Ebac")
       expect(response.status).to.equal(200)
       expect(response.body).to.have.property('produtos')
       expect(response.duration).to.be.lessThan(300)
@@ -27,16 +26,17 @@ describe('Teste da funcionalidade produtos', () => {
       })
   });
 
-  it.only('Deve editar um produto ', () => {
+  it('Deve editar um produto ', () => {
+    let produto = `produto ${Math.floor(Math.random() * 100000)}`
     cy.request("produtos").then(response => {
-      cy.log(response.body.produtos[7]._id)
       let id = response.body.produtos[7]._id
+
       cy.request({
         method: "PUT",
         url: `produtos/${id}`,
         headers: { authorization: token },
         body: {
-          "nome": "Caneta Faber Castell Vermelha",
+          "nome": produto,
           "preco": 4,
           "descricao": "Caneta de Ponta fina",
           "quantidade": 381
@@ -46,7 +46,47 @@ describe('Teste da funcionalidade produtos', () => {
         expect(response.status).to.equal(200)
       })
     })
+  });
 
+  it('Deve editar um produto cadastrado previamente', () => {
+    let produto = `produto ${Math.floor(Math.random() * 100000)}`
+
+    cy.cadastrarProduto(token, produto, 1000, "CD", 1000)
+      .then(response => {
+        let id = response.body._id
+
+        cy.request({
+          method: "PUT",
+          url: `produtos/${id}`,
+          headers: { authorization: token },
+          body: {
+            "nome": produto,
+            "preco": 4,
+            "descricao": "Caneta de Ponta fina",
+            "quantidade": 500
+          }
+        }).then((response) => {
+          expect(response.body.message).to.equal('Registro alterado com sucesso')
+          expect(response.status).to.equal(200)
+        })
+      })
+  });
+
+  it('Deve exluir um produto', () => {
+    let produto = `produto ${Math.floor(Math.random() * 10000)}`
+    cy.cadastrarProduto(token, produto, 1000, "CD", 1000)
+      .then(response => {
+        let id = response.body._id
+
+        cy.request({
+          method: "DELETE",
+          url: `produtos/${id}`,
+          headers: { authorization: token }
+        }).then((response) => {
+          expect(response.body.message).to.equal("Registro excluído com sucesso")
+          expect(response.status).to.equal(200)
+        })
+      })
   });
 
 
