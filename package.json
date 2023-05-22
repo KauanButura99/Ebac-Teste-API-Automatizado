@@ -5,9 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "npm run cy:run",
-    "start":"npx serverest",
+    "start": "npx serverest",
     "cy:open": "npx cypress open",
-    "cy:run": "npx cypress run"
+    "cy:run": "npx cypress run",
+    "cy:run-ci": "start-server-and-test start-server http://localhost:8080 test"
   },
   "keywords": [],
   "author": "",
@@ -16,6 +17,7 @@
     "cypress": "^12.11.0"
   },
   "dependencies": {
-    "joi": "^17.9.2"
+    "joi": "^17.9.2",
+    "start-server-and-test": "^2.0.0"
   }
 }
