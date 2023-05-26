@@ -4,8 +4,8 @@ pipeline {
     stages {
       stage("Setup"){
         steps {
-          git branch: 'main', url: 'https://github.com/KauanButura99/Ebac-Teste-API-Automatizado'
-          sh 'NO_COLOR=1 npm run cy:run-ci'
+          git branch: 'main', url: 'https://github.com/KauanButura99/Ebac-Teste-API-Automatizado.git'
+          sh 'npm install'
         }
       }
 
