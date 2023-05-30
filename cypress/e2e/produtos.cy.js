@@ -7,7 +7,7 @@ describe('Teste da funcionalidade produtos', () => {
     cy.token("fulano@qa.com", "teste").then(tkn => { token = tkn })
   });
 
-  it.only('Deve validar contrato de produtos', () => {
+  it('Deve validar contrato de produtos', () => {
     cy.request('produtos').then(response => {
       return contrato.validateAsync(response.body)
     })
