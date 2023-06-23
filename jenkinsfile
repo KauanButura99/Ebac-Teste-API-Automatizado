@@ -1,0 +1,18 @@
+pipeline{
+  agent any
+
+    stages{
+      stage('configuração') {
+        steps{
+          git branch: 'main', url: 'https://github.com/KauanButura99/Ebac-Teste-API-Automatizado.git'
+          sh 'npm install' // sh= usar quando você está sendo executado em uma maquina Linux
+        }
+      }
+
+      stage('test') {
+         steps{
+          sh 'NO_COLOR= npm run cy:run-ci'
+        }
+      }
+    }
+}
